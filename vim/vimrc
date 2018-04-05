@@ -1,0 +1,63 @@
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+set rtp+=~/.dotfiles/vim/bundle/Vundle.vim
+call vundle#begin()
+" let Vundle manage Vundle, required
+Plugin 'VundleVim/Vundle.vim'
+
+Plugin 'arcticicestudio/nord-vim' " Colorscheme Nord
+Plugin 'vim-airline/vim-airline' | Plugin 'vim-airline/vim-airline-themes' " Status line
+Plugin 'Yggdroot/indentLine' " Indentation level
+Plugin 'ryanoasis/vim-devicons' " Devicons
+Plugin 'bling/vim-bufferline' " Buffer line
+Plugin 'mhinz/vim-startify' " Start page
+Plugin 'Raimondi/delimitMate' " Closing of quotes
+Plugin 'tomtom/tcomment_vim' " Commenter
+Plugin 'haya14busa/incsearch.vim' " Incremental highlighting
+Plugin 'haya14busa/vim-asterisk' " Improved asterisk
+Plugin 'easymotion/vim-easymotion' " Easy motion
+Plugin 'terryma/vim-multiple-cursors' " Multiple cursors
+Plugin 'tpope/vim-surround' " Surround
+Plugin 'tpope/vim-repeat' " Repeat
+Plugin 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all'  } " Fuzzy finder
+Plugin 'junegunn/fzf.vim' " Fuzzy finder plugin
+Plugin 'junegunn/vim-easy-align', { 'on': ['<Plug>(EasyAlign)', 'EasyAlign'] } " Easy align
+Plugin 'roxma/vim-paste-easy' " Easy paste
+Plugin 'sickill/vim-pasta' " Vim pasta
+Plugin 'Keithbsmiley/investigate.vim' " Helper
+Plugin 'wellle/targets.vim' " Text objects
+Plugin 'roman/golden-ratio' " Resize windows
+Plugin 'chrisbra/vim-diff-enhanced' " Create better diffs
+Plugin 'tpope/vim-unimpaired' " Pairs of mappings
+Plugin 'bradford-smith94/quick-scope' " Quick scope
+Plugin 'yuttie/comfortable-motion.vim' " Comfortable motion
+Plugin 'sjl/gundo.vim' " Uundo tree
+Plugin 'bkad/CamelCaseMotion' " Camel case motion
+Plugin 'majutsushi/tagbar' " Tag bar
+Plugin 'ludovicchabant/vim-gutentags' " Manage tag files
+Plugin 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' } " NERD tree
+Plugin 'Xuyuanp/nerdtree-git-plugin', { 'on': 'NERDTreeToggle' } " NERD tree git
+Plugin 'prabirshrestha/asyncomplete.vim' " Async autocompletion
+Plugin 'prabirshrestha/async.vim' " Normalize async job control api
+Plugin 'prabirshrestha/vim-lsp' " Async language server protocol
+Plugin 'prabirshrestha/asyncomplete-lsp.vim' " Language server protocol
+Plugin 'prabirshrestha/asyncomplete-tags.vim' " Tag completions
+Plugin 'yami-beta/asyncomplete-omni.vim' " Omni completion
+Plugin 'prabirshrestha/asyncomplete-buffer.vim' " Buffer completion
+Plugin 'prabirshrestha/asyncomplete-file.vim' " File completion
+Plugin 'prabirshrestha/asyncomplete-neosnippet.vim' " Neosnippet autocompletion
+Plugin 'Shougo/neosnippet.vim' " Snippet engine
+Plugin 'Shougo/neosnippet-snippets' " Snippets
+Plugin 'wellle/tmux-complete.vim' " Completion for tmux panes
+Plugin 'w0rp/ale' " Lint engine
+Plugin 'tpope/vim-fugitive' " Git wrapper
+Plugin 'airblade/vim-gitgutter' " Git diff sign
+Plugin 'mattn/emmet-vim', { 'for': ['html', 'css'] } " Emmet
+Plugin 'sheerun/vim-polyglot' " Language Support
+
+call vundle#end()            " required
+filetype plugin indent on    " required
+" To ignore plugin indent changes, instead use:
+"filetype plugin on
+"

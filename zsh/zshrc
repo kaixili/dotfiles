@@ -1,0 +1,38 @@
+export DOTFILES=$HOME/.dotfiles
+
+source $DOTFILES/zsh/antigen.zsh
+
+# Load the oh-my-zsh's library.
+antigen use oh-my-zsh
+
+antigen bundles <<EOBUNDLES
+# Bundles from the default repo (robbyrussell's oh-my-zsh).
+  git						# extras: git-extras gitfast git-flow git-flow-avh git-hubflow git-remote-branch
+  gitignore					# gi alias to fetch default .gitignore files from http://gitignore.io/
+  github					# cli access, url shortener
+
+  extract					# 'x' alias - swiss knife for archive extracting
+  cp 						# cp with progress bar (rsync)
+
+  colored-man-pages				# adds colors to manpages
+
+  zsh-users/zsh-autosuggestions
+  zsh-users/zsh-completions
+  zsh-users/zsh-syntax-highlighting
+  zsh-users/zsh-history-substring-search
+
+  rupa/z
+EOBUNDLES
+
+# Load the theme.
+antigen theme robbyrussell
+
+# Tell Antigen that you're done.
+antigen apply
+
+
+source $DOTFILES/zsh/history.zsh
+source $DOTFILES/zsh/export.zsh
+source $DOTFILES/zsh/alias.zsh
+source $DOTFILES/zsh/function.zsh
+source $DOTFILES/zsh/zsh.local
