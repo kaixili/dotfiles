@@ -36,3 +36,5 @@ source $DOTFILES/zsh/export.zsh
 source $DOTFILES/zsh/alias.zsh
 source $DOTFILES/zsh/function.zsh
 source $DOTFILES/zsh/zsh.local
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
