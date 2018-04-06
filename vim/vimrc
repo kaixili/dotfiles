@@ -78,6 +78,10 @@ set statusline=\ %{HasPaste()}%F%m%r%h\ %w\ \ CWD:\ %r%{getcwd()}%h\ \ \ Line:\ 
 if &term =~ '256color'
     set t_ut=
 endif
+" remember last position
+if has("autocmd")
+  au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
+endif
 " }}}
 " Shell {{{
 set shell=/bin/zsh
