@@ -1,2 +1,3 @@
 *.local
 tags
+!tmux.conf.local
