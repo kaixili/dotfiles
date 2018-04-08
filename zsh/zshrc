@@ -43,8 +43,8 @@ source $DOTFILES/zsh/alias.zsh
 source $DOTFILES/zsh/function.zsh
 [ -f $DOTFILES/zsh/zsh.local ] && source $DOTFILES/zsh/zsh.local
 
-# Use tmux 
+# Use tmux in terimal, but not in tty login in shell
 case $- in *i*)
-  if [ -z "$TMUX" ]; then exec tmux; fi;;
+  if [ -z "$TMUX" ]; then [[ -o login ]] && echo 'Hello -!' || exec tmux -2 ; fi;;
 esac
-
+ 
