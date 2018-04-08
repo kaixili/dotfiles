@@ -1,0 +1,12 @@
+[submodule "tyrannical"]
+	path = awesome/tyrannical
+	url =  https://github.com/Elv13/tyrannical
+
+[submodule "revelation"]
+	path = awesome/revelation
+	url =  https://github.com/guotsuan/awesome-revelation
+
+[submodule "ohmytmux"]
+	path = tmux/ohmytmux
+	url =  https://github.com/gpakosz/.tmux
+
