@@ -1,6 +1,6 @@
 # Dotfiles
 
-
+# clone
 ```bash
 cd ~
 git clone https://github.com/kaixili/dotfiles ~/.dotfiles
@@ -10,3 +10,6 @@ ln -s .dotfiles/tmux/tmux.conf .tmux.conf
 ln -s .dotfiles/tmux/tmux.conf.local .tmux.conf.local
 ```
 
+# screen
+![vim](vim.png)
+![zsh](zsh.png)
