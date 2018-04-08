@@ -43,3 +43,8 @@ source $DOTFILES/zsh/alias.zsh
 source $DOTFILES/zsh/function.zsh
 [ -f $DOTFILES/zsh/zsh.local ] && source $DOTFILES/zsh/zsh.local
 
+# Use tmux 
+case $- in *i*)
+  if [ -z "$TMUX" ]; then exec tmux; fi;;
+esac
+
