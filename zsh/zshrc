@@ -25,7 +25,10 @@ antigen bundles <<EOBUNDLES
 EOBUNDLES
 
 # Load the theme.
-antigen theme robbyrussell
+# If change theme, run ` $ antigen reset `
+# antigen theme robbyrussell
+# antigen theme fox
+antigen theme $DOTFILES/zsh/theme oxide --no-local-clone
 
 # Tell Antigen that you're done.
 antigen apply
