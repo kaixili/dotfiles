@@ -1,0 +1,19 @@
+[color]
+  diff = auto
+  status = auto
+  branch = auto
+  ui = true
+  interactive = auto
+[user]
+  email = lkx810@gmail.com
+  name = kaixili
+[push]
+  default = simple
+[github]
+  user = kaixili
+[alias]
+  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+[merge]
+  tool = vimdiff
+[diff]
+  tool = vimdiff
