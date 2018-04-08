@@ -58,6 +58,7 @@ Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
 " Complete
 " Plug 'ervandew/supertab'
 Plug 'shougo/neocomplete'
+Plug 'jiangmiao/auto-pairs'
 
 " Initialize plugin system
 call plug#end()
