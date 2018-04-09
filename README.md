@@ -7,6 +7,12 @@ git clone https://github.com/kaixili/dotfiles ~/.dotfiles
 cd ~/.dotfiles
 git submodule init
 cd ~
+
+# install vim plug
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+    https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+# link
 ln -s .dotfiles/zsh/zshrc .zshrc
 ln -s .dotfiles/vim/vimrc .vimrc
 ln -s .dotfiles/tmux/tmux.conf .tmux.conf

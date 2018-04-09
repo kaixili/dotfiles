@@ -8,6 +8,6 @@ $ curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
 # On MAC
 
 ```bash
-# if erros happend open Xocde install some components and re-run again
+# if erros happend open Xcode install some components and re-run again
 $ brew install macvim --with-cscope --with-lua --with-python3 --override-system-vim
 ```
