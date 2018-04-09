@@ -1,7 +1,20 @@
 export DOTFILES=$HOME/.dotfiles
 
-source $DOTFILES/zsh/antigen.zsh
+# Judge which OS 
+case "$(uname -s)" in
+    Linux*)     machine=Linux;;
+    Darwin*)    machine=Mac;;
+    CYGWIN*)    machine=Cygwin;;
+    MINGW*)     machine=MinGw;;
+    *)          machine="UNKNOWN:${unameOut}"
+esac
 
+# Use tmux in terimal, but not in tty login in shell
+case $- in *i*)
+  if [ -z "$TMUX" ]; then [[ -o login ]] && [[ $machine -ne "Mac" ]] && echo 'Hello -!' || exec tmux -2 ; fi;;
+esac
+
+source $DOTFILES/zsh/antigen.zsh
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
@@ -15,6 +28,8 @@ antigen bundles <<EOBUNDLES
   cp                   # cp with progress bar (rsync)
 
   colored-man-pages    # adds colors to manpages
+
+# unixorn/warhol.plugin.zsh               # Colorize command output using grc and lscolors
 
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-completions
@@ -45,9 +60,3 @@ source $DOTFILES/zsh/export.zsh
 source $DOTFILES/zsh/alias.zsh
 source $DOTFILES/zsh/function.zsh
 [ -f $DOTFILES/zsh/zsh.local ] && source $DOTFILES/zsh/zsh.local
-
-# Use tmux in terimal, but not in tty login in shell
-case $- in *i*)
-  if [ -z "$TMUX" ]; then [[ -o login ]] && echo 'Hello -!' || exec tmux -2 ; fi;;
-esac
- 

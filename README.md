@@ -13,6 +13,14 @@ ln -s .dotfiles/tmux/tmux.conf .tmux.conf
 ln -s .dotfiles/tmux/tmux.conf.local .tmux.conf.local
 ```
 
+# font
+- fira-code
+
+# life-saving termial software
+- tmux
+- ydcv
+- fzf
+
 # screen
 ![vim](vim.png)
 ![zsh](zsh.png)
