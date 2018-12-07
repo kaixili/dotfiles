@@ -2,3 +2,4 @@
 *.antigen-compat
 tags
 !tmux.conf.local
+zsh/antigen.zsh

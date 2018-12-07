@@ -13,15 +13,3 @@ function proxy_off(){
     sudo systemctl stop delegate
     echo -e "Proxy environment variable removed."
 }
-
-function cuda_on(){
-    echo Now Cuda Device is
-    sudo tee /proc/acpi/bbswitch <<< ON
-}
-
-function cuda_off(){
-    sudo rmmod nvidia_uvm
-    sudo rmmod nvidia
-    echo Now Cuda Device is
-    sudo tee /proc/acpi/bbswitch <<< OFF
-}
