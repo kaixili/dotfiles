@@ -16,7 +16,7 @@ antigen bundles <<EOBUNDLES
 
   extract              # 'x' alias - swiss knife for archive extracting
   cp                   # cp with progress bar (rsync)
-  fzf
+  fzf                  # fuzzy search command using Ctrl-R
   git-open             # open remote url
   web-search
 
@@ -42,18 +42,6 @@ antigen apply
 # configure autosuggestions
 bindkey '^f' forward-word
 
-# run $fzf
-# pacman -S fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
 source $DOTFILES/zsh/history.zsh
-source $DOTFILES/zsh/export.zsh
-source $DOTFILES/zsh/alias.zsh
-source $DOTFILES/zsh/function.zsh
+source $DOTFILES/zsh/user.setting.zsh
 [ -f $DOTFILES/zsh/zsh.local ] && source $DOTFILES/zsh/zsh.local
-
-# Use tmux in terimal, but not in tty login in shell
-#case $- in *i*)
-#  if [ -z "$TMUX" ]; then [[ -o login ]] && echo 'Hello -!' || exec tmux -2 ; fi;;
-#esac
- 

@@ -1,3 +1,20 @@
+# alias {{{
+alias open='kde-open5 '
+alias vi='vim '
+alias gp='grep --color=auto '
+alias get='/usr/bin/axel -n 5 -a '
+alias yd='ydcv '
+alias h='glances'
+alias aria2rpc='aria2c --conf-path=/etc/aria2.conf -D '
+alias rm='rm -i '
+alias mv='mv -i '
+alias cp='cp -i '
+alias cd..='cd .. '
+alias wifi='nmcli dev wifi '
+# }}}
+#
+export TERM='xterm-256color'
+
 function proxy_on() {
 #    export no_proxy="localhost,127.0.0.1,localaddress,.localdomain.com"
     sudo systemctl start delegate

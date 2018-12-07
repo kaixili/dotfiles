@@ -30,6 +30,14 @@ else
     limegreen="%F{green}"
 fi
 
+if [[ -z "$SSH_CLIENT" ]]; then
+        prompt_host=""
+        prompt_ip=""
+else
+        prompt_host="%{$turquoise%}$(whoami)%{$reset_color%}@%{$orange%}$(hostname -s)"
+        prompt_ip="%{$turquoise%}$(ip route get 8.8.8.8| grep src| sed 's/.*src \(.*\)$/\1/g' | awk '{print $1}')%{$reset_color%} @ "
+fi
+
 # enable VCS systems you use.
 zstyle ':vcs_info:*' enable git svn
 
@@ -85,5 +93,5 @@ function oxide_precmd {
 add-zsh-hook precmd oxide_precmd
 
 PROMPT=$'
-%{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)
-%(?.%F{white}.%F{red})$%f '
+${prompt_ip}%{$limegreen%}%~${PR_RST} $vcs_info_msg_0_$(virtualenv_info)
+${prompt_host}%(?.%F{white}.%F{red})$%f '

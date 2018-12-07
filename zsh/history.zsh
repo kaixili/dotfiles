@@ -8,8 +8,7 @@ setopt hist_ignore_all_dups
 # 时间戳
 setopt EXTENDED_HISTORY
 # 在命令前添加空格，不将此命令添加到记录文件中
-#setopt hist_ignore_space
-# zsh 4.3.6 doesn't have this option
+# setopt hist_ignore_space
 setopt hist_fcntl_lock 2>/dev/null
 setopt hist_reduce_blanks
 # 共享历史记录
@@ -20,4 +19,3 @@ setopt AUTO_PUSHD
 setopt PUSHD_IGNORE_DUPS
 # 允许交互界面注释
 setopt INTERACTIVE_COMMENTS
-
