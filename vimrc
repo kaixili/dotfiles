@@ -124,6 +124,7 @@ set wildmenu
 set number
 set lazyredraw
 set nocursorline " highlight current line
+set nowrap
 set fillchars+=vert:┃
 " }}}
 " Folding {{{

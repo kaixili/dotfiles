@@ -3,7 +3,7 @@
  export XMODIFIERS="@im=fcitx"
  export XIM=fcitx
 
- export IDEA_JDK=/usr/lib/jvm/intellij-jdk
+ [ -d /usr/lib/jvm/intellij-jdk ] && export IDEA_JDK=/usr/lib/jvm/intellij-jdk
 
  export QT_QPA_PLATFORMTHEME="kde"
  export XDG_CURRENT_DESKTOP=KDE

@@ -4,6 +4,9 @@ export DOTFILES=$HOME/.dotfiles
 
 source $DOTFILES/zsh/antigen.zsh
 
+# Auto update theme
+[ -f .zshrc.zwc ] && [ .zshrc.zwc -ot .dotfiles/zsh/theme/oxide.zsh-theme ] && antigen reset && echo "Theme update."
+
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 

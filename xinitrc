@@ -1,5 +1,5 @@
 source ~/.xprofile
-xrdb ~/.Xresources
+xrdb ~/.Xresources &
 
 
 exec awesome
