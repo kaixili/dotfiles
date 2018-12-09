@@ -1,7 +1,13 @@
 "
-" lkx810
-" 2018/04/06
-" https://dougblack.io/words/a-good-vimrc.html
+" ██╗   ██╗██╗███╗   ███╗
+" ██║   ██║██║████╗ ████║
+" ██║   ██║██║██╔████╔██║
+" ╚██╗ ██╔╝██║██║╚██╔╝██║
+"  ╚████╔╝ ██║██║ ╚═╝ ██║
+"   ╚═══╝  ╚═╝╚═╝     ╚═╝
+"
+" github.com/kaixili
+" 2018/12/09
 " https://vimawesome.com/
 "
 
@@ -66,6 +72,7 @@ Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
 " Plug 'ervandew/supertab'
 Plug 'shougo/neocomplete'
 Plug 'jiangmiao/auto-pairs'
+Plug 'Valloric/YouCompleteMe'
 
 " Initialize plugin system
 call plug#end()
@@ -150,7 +157,6 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 "
-map <F2> :NERDTreeToggle<CR>
 " Useful mappings for managing tabs
 " Use `$vim -p` open multi files
 map <leader>tn :tabnew<cr>
@@ -166,12 +172,15 @@ nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
 au TabLeave * let g:lasttab = tabpagenr()
 " }}}
 " User Function {{{
-command W w !sudo tee % > /dev/null
+command WW w !sudo tee % > /dev/null
+command W w
 command Wq wq
 set pastetoggle=<F3>
 " }}}
 
 " NERDTree {{{
+map <F2> :NERDTreeToggle<CR>
+
 autocmd StdinReadPre * let s:std_in=1
 " open a NERDTree automatically when vim starts up if no files were specified
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -251,6 +260,9 @@ endif
 " For perlomni.vim setting.
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
+" }}}
+" Ycm {{{
+let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 " }}}
 
 " vim:foldmethod=marker:foldlevel=0

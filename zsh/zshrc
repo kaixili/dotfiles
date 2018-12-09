@@ -1,3 +1,12 @@
+# ███████╗███████╗██╗  ██╗
+# ╚══███╔╝██╔════╝██║  ██║
+#   ███╔╝ ███████╗███████║
+#  ███╔╝  ╚════██║██╔══██║
+# ███████╗███████║██║  ██║
+# ╚══════╝╚══════╝╚═╝  ╚═╝
+#                        
+
+
 export DOTFILES=$HOME/.dotfiles
 
 [ -f $DOTFILES/zsh/antigen.zsh  ] || curl -L git.io/antigen > $DOTFILES/zsh/antigen.zsh 

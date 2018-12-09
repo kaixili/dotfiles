@@ -10,6 +10,7 @@ alias mv='mv -i '
 alias cp='cp -i '
 alias cd..='cd .. '
 alias wifi='nmcli dev wifi '
+alias m='make '
 # }}}
 #
 export TERM='xterm-256color'
