@@ -1,136 +1,194 @@
-
 --[[
-                                                  
-     Licensed under GNU General Public License v2 
-      * (c) 2014,      projektile                 
-      * (c) 2013,      Luke Bonham                
-      * (c) 2010-2012, Peter Hofmann              
-                                                  
+
+     Licensed under GNU General Public License v2
+      * (c) 2018,      Eugene Pakhomov
+      * (c) 2016,      Henrik Antonsson
+      * (c) 2015,      Joerg Jaspert
+      * (c) 2014,      projektile
+      * (c) 2013,      Luca CPZ
+      * (c) 2010-2012, Peter Hofmann
+
 --]]
 
-local awful     = require("awful")
-local beautiful = require("beautiful")
-local tonumber  = tonumber
-local math      = { floor = math.floor }
+local floor, max, mouse, mousegrabber, screen = math.floor, math.max, mouse, mousegrabber, screen
 
-local centerwork =
-{
-    name         = "centerwork",
-    top_right    = 0,
-    bottom_right = 1,
-    bottom_left  = 2,
-    top_left     = 3
+local centerwork = {
+    name       = "centerwork",
+    horizontal = { name = "centerworkh" }
 }
 
-function centerwork.arrange(p)
-    -- A useless gap (like the dwm patch) can be defined with
-    -- beautiful.useless_gap_width .
-    local useless_gap = tonumber(beautiful.useless_gap_width) or 0
-
-    -- A global border can be defined with
-    -- beautiful.global_border_width
-    local global_border = tonumber(beautiful.global_border_width) or 0
-    if global_border < 0 then global_border = 0 end
-
-    -- Screen.
-    local wa = p.workarea
+local function arrange(p, layout)
+    local t   = p.tag or screen[p.screen].selected_tag
+    local wa  = p.workarea
     local cls = p.clients
 
-    -- Borders are factored in.
-    wa.height = wa.height - (global_border * 2)
-    wa.width = wa.width - (global_border * 2)
-    wa.x = wa.x + global_border
-    wa.y = wa.y + global_border
+    if #cls == 0 then return end
 
-    -- Width of main column?
-    local t = awful.tag.selected(p.screen)
-    local mwfact = awful.tag.getmwfact(t)
+    local c, g = cls[1], {}
 
-    if #cls > 0
-    then
-        -- Main column, fixed width and height.
-        local c = cls[1]
-        local g = {}
-        local mainwid = math.floor(wa.width * mwfact)
-        local slavewid = wa.width - mainwid
-        local slaveLwid = math.floor(slavewid / 2)
-        local slaveRwid = slavewid - slaveLwid
-        local slaveThei = math.floor(wa.height / 2)
-        local slaveBhei = wa.height - slaveThei
-        local Thalfgap = math.floor(useless_gap / 2)
-        local Bhalfgap = useless_gap - Thalfgap
+    -- Main column, fixed width and height
+    local mwfact          = t.master_width_factor
+    local mainhei         = floor(wa.height * mwfact)
+    local mainwid         = floor(wa.width * mwfact)
+    local slavewid        = wa.width - mainwid
+    local slaveLwid       = floor(slavewid / 2)
+    local slaveRwid       = slavewid - slaveLwid
+    local slavehei        = wa.height - mainhei
+    local slaveThei       = floor(slavehei / 2)
+    local slaveBhei       = slavehei - slaveThei
+    local nbrFirstSlaves  = floor(#cls / 2)
+    local nbrSecondSlaves = floor((#cls - 1) / 2)
 
-        g.height = wa.height - 2*useless_gap - 2*c.border_width
-        g.width = mainwid - 2*c.border_width
+    local slaveFirstDim, slaveSecondDim = 0, 0
+
+    if layout.name == "centerwork" then -- vertical
+        if nbrFirstSlaves  > 0 then slaveFirstDim  = floor(wa.height / nbrFirstSlaves) end
+        if nbrSecondSlaves > 0 then slaveSecondDim = floor(wa.height / nbrSecondSlaves) end
+
+        g.height = wa.height
+        g.width  = mainwid
+
         g.x = wa.x + slaveLwid
-        g.y = wa.y + useless_gap
+        g.y = wa.y
+    else -- horizontal
+        if nbrFirstSlaves  > 0 then slaveFirstDim  = floor(wa.width / nbrFirstSlaves) end
+        if nbrSecondSlaves > 0 then slaveSecondDim = floor(wa.width / nbrSecondSlaves) end
 
-        if g.width < 1 then g.width = 1 end
-        if g.height < 1 then g.height = 1 end
-        c:geometry(g)
+        g.height  = mainhei
+        g.width = wa.width
 
-        -- Auxiliary windows.
-        if #cls > 1
-        then
-            local at = 0
-            for i = 2,#cls
-            do
-                -- It's all fixed. If there are more than 5 clients,
-                -- those additional clients will float. This is
-                -- intentional.
-                if at == 4
-                then
-                    break
-                end
+        g.x = wa.x
+        g.y = wa.y + slaveThei
+    end
 
-                c = cls[i]
-                g = {}
+    g.width  = max(g.width, 1)
+    g.height = max(g.height, 1)
 
-                if i - 2 == centerwork.top_left
-                then
-                    -- top left
-                    g.x = wa.x + useless_gap
-                    g.y = wa.y + useless_gap
-                    g.width = slaveLwid - 2*useless_gap - 2*c.border_width
-                    g.height = slaveThei - useless_gap - Thalfgap - 2*c.border_width
-                elseif i - 2 == centerwork.top_right
-                then
-                    -- top right
-                    g.x = wa.x + slaveLwid + mainwid + useless_gap
-                    g.y = wa.y + useless_gap
-                    g.width = slaveRwid - 2*useless_gap - 2*c.border_width
-                    g.height = slaveThei - useless_gap - Thalfgap - 2*c.border_width
-                elseif i - 2 == centerwork.bottom_left
-                then
-                    -- bottom left
-                    g.x = wa.x + useless_gap
-                    g.y = wa.y + slaveThei + Bhalfgap
-                    g.width = slaveLwid - 2*useless_gap - 2*c.border_width
-                    g.height = slaveBhei - useless_gap - Bhalfgap - 2*c.border_width
-                elseif i - 2 == centerwork.bottom_right
-                then
-                    -- bottom right
-                    g.x = wa.x + slaveLwid + mainwid + useless_gap
-                    g.y = wa.y + slaveThei + Bhalfgap
-                    g.width = slaveRwid - 2*useless_gap - 2*c.border_width
-                    g.height = slaveBhei - useless_gap - Bhalfgap - 2*c.border_width
-                end
+    p.geometries[c] = g
 
-                if g.width < 1 then g.width = 1 end
-                if g.height < 1 then g.height = 1 end
-                c:geometry(g)
+    -- Auxiliary clients
+    if #cls <= 1 then return end
+    for i = 2, #cls do
+        local c, g = cls[i], {}
+        local idxChecker, dimToAssign
 
-                at = at + 1
+        local rowIndex = floor(i/2)
+
+        if layout.name == "centerwork" then
+            if i % 2 == 0 then -- left slave
+                g.x     = wa.x
+                g.y     = wa.y + (rowIndex - 1) * slaveFirstDim
+                g.width = slaveLwid
+
+                idxChecker, dimToAssign = nbrFirstSlaves, slaveFirstDim
+            else -- right slave
+                g.x     = wa.x + slaveLwid + mainwid
+                g.y     = wa.y + (rowIndex - 1) * slaveSecondDim
+                g.width = slaveRwid
+
+                idxChecker, dimToAssign = nbrSecondSlaves, slaveSecondDim
             end
 
-            -- Set remaining clients to floating.
-            for i = (#cls - 1 - 4),1,-1
-            do
-                c = cls[i]
-                awful.client.floating.set(c, true)
+            -- if last slave in row, use remaining space for it
+            if rowIndex == idxChecker then
+                g.height = wa.y + wa.height - g.y
+            else
+                g.height = dimToAssign
+            end
+        else
+            if i % 2 == 0 then -- top slave
+                g.x      = wa.x + (rowIndex - 1) * slaveFirstDim
+                g.y      = wa.y
+                g.height = slaveThei
+
+                idxChecker, dimToAssign = nbrFirstSlaves, slaveFirstDim
+            else -- bottom slave
+                g.x      = wa.x + (rowIndex - 1) * slaveSecondDim
+                g.y      = wa.y + slaveThei + mainhei
+                g.height = slaveBhei
+
+                idxChecker, dimToAssign = nbrSecondSlaves, slaveSecondDim
+            end
+
+            -- if last slave in row, use remaining space for it
+            if rowIndex == idxChecker then
+                g.width = wa.x + wa.width - g.x
+            else
+                g.width = dimToAssign
             end
         end
+
+        g.width  = max(g.width, 1)
+        g.height = max(g.height, 1)
+
+        p.geometries[c] = g
     end
+end
+
+local function mouse_resize_handler(c, corner, x, y, orientation)
+    local wa     = c.screen.workarea
+    local mwfact = c.screen.selected_tag.master_width_factor
+    local g      = c:geometry()
+    local offset = 0
+    local cursor = "cross"
+
+    local corner_coords
+
+    if orientation == 'vertical' then
+        if g.height + 15 >= wa.height then
+            offset = g.height * .5
+            cursor = "sb_h_double_arrow"
+        elseif not (g.y + g.height + 15 > wa.y + wa.height) then
+            offset = g.height
+        end
+        corner_coords = { x = wa.x + wa.width * (1 - mwfact) / 2, y = g.y + offset }
+    else
+        if g.width + 15 >= wa.width then
+            offset = g.width * .5
+            cursor = "sb_v_double_arrow"
+        elseif not (g.x + g.width + 15 > wa.x + wa.width) then
+            offset = g.width
+        end
+        corner_coords = { y = wa.y + wa.height * (1 - mwfact) / 2, x = g.x + offset }
+    end
+
+    mouse.coords(corner_coords)
+
+    local prev_coords = {}
+
+    mousegrabber.run(function(_mouse)
+        if not c.valid then return false end
+        for _, v in ipairs(_mouse.buttons) do
+            if v then
+                prev_coords = { x = _mouse.x, y = _mouse.y }
+                local new_mwfact
+                if orientation == 'vertical' then
+                    new_mwfact = 1 - (_mouse.x - wa.x) / wa.width * 2
+                else
+                    new_mwfact = 1 - (_mouse.y - wa.y) / wa.height * 2
+                end
+                c.screen.selected_tag.master_width_factor = math.min(math.max(new_mwfact, 0.01), 0.99)
+                return true
+            end
+        end
+        return prev_coords.x == _mouse.x and prev_coords.y == _mouse.y
+    end, cursor)
+end
+
+function centerwork.arrange(p)
+    return arrange(p, centerwork)
+end
+
+function centerwork.horizontal.arrange(p)
+    return arrange(p, centerwork.horizontal)
+end
+
+function centerwork.mouse_resize_handler(c, corner, x, y)
+    return mouse_resize_handler(c, corner, x, y, 'vertical')
+end
+
+function centerwork.horizontal.mouse_resize_handler(c, corner, x, y)
+    return mouse_resize_handler(c, corner, x, y, 'horizontal')
 end
 
 return centerwork

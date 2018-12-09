@@ -1,22 +1,17 @@
-
 --[[
-                                                   
-     Licensed under GNU General Public License v2  
-      * (c) 2015, Luke Bonham                      
-      * (c) 2015, plotnikovanton                   
-                                                   
+
+     Licensed under GNU General Public License v2
+      * (c) 2015, Luca CPZ
+      * (c) 2015, plotnikovanton
+
 --]]
 
 local wibox     = require("wibox")
-local beautiful = require("beautiful")
 local gears     = require("gears")
 
 -- Lain Cairo separators util submodule
 -- lain.util.separators
-local separators = {}
-
-local height = beautiful.awful_widget_height or 0
-local width  = beautiful.separators_width or 9
+local separators = { height = 0, width = 9 }
 
 -- [[ Arrow
 
@@ -24,7 +19,9 @@ local width  = beautiful.separators_width or 9
 function separators.arrow_right(col1, col2)
     local widget = wibox.widget.base.make_widget()
 
-    widget.fit = function(m, w, h) return width, height end
+    widget.fit = function(m, w, h)
+        return separators.width, separators.height
+    end
 
     widget.draw = function(mycross, wibox, cr, width, height)
         if col2 ~= "alpha" then
@@ -62,7 +59,9 @@ end
 function separators.arrow_left(col1, col2)
     local widget = wibox.widget.base.make_widget()
 
-    widget.fit = function(m, w, h) return width, height end
+    widget.fit = function(m, w, h)
+        return separators.width, separators.height
+    end
 
     widget.draw = function(mycross, wibox, cr, width, height)
         if col1 ~= "alpha" then
