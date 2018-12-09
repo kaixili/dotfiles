@@ -25,6 +25,8 @@ antigen bundles <<EOBUNDLES
 
   colored-man-pages    # adds colors to manpages
 
+# unixorn/warhol.plugin.zsh               # Colorize command output using grc and lscolors
+
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-completions
   zsh-users/zsh-syntax-highlighting
