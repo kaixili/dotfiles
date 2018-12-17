@@ -1,4 +1,11 @@
 # Dotfiles
+Simple and Stupid RC.
+- vim
+- zsh
+- awesome wm
+- Xresouce
+- konsole tab css
+- xinitrc && xprofile
 
 # clone
 ```bash
@@ -10,10 +17,15 @@ cd ~
 
 # link
 ln -s .dotfiles/zsh/zshrc .zshrc
-ln -s .dotfiles/vim/vimrc .vimrc
-ln -s .dotfiles/tmux/tmux.conf .tmux.conf
-ln -s .dotfiles/tmux/tmux.conf.local .tmux.conf.local
+ln -s .dotfiles/vimrc .vimrc
 ```
+
+# preview
+- vim
+    ![vim](./vim.jpg)
+- zsh
+    ![zsh](./zsh.jpg)
+
 
 # font
 - fira-code
