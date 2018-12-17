@@ -22,27 +22,22 @@ endif
 call plug#begin('~/.vim/plugged')
 
 " Vim
-Plug 'vimwiki/vimwiki'
-let g:vimwiki_list = [{'path': '~/.wiki/'}]
-Plug 'junegunn/vim-easy-align'
+Plug 'vimwiki/vimwiki'          " Personal wiki
+    let g:vimwiki_list = [{'path': '~/.wiki/'}]
 Plug 'ctrlpvim/ctrlp.vim'
-let g:ctrlp_match_window = 'bottom,order:ttb'
-let g:ctrlp_switch_buffer = 0
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
-
-" Color & Highlight
-Plug 'joshdick/onedark.vim'
-Plug 'sheerun/vim-polyglot'
+    let g:ctrlp_match_window = 'bottom,order:ttb'
+    let g:ctrlp_switch_buffer = 0
+    let g:ctrlp_working_path_mode = 0
+    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
 
 " UI
+Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
-let g:airline_powerline_fonts = 1
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline_theme='onedark'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'sheerun/vim-polyglot'    " A collection of language packs for Vim
 Plug 'airblade/vim-gitgutter'
+Plug 'roman/golden-ratio'
+let g:golden_ratio_exclude_nonmodifiable = 1
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-startify'
 
@@ -58,12 +53,12 @@ Plug 'junegunn/vim-easy-align'
 
 " Lint
 Plug 'w0rp/ale'
-let g:ale_linters = {
-      \   'python': ['flake8'],
-      \   'C++': ['clang-format'],
-      \}
-let g:ale_fix_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
+    let g:ale_linters = {
+          \   'python': ['flake8'],
+          \   'C++': ['clang-format'],
+          \}
+    let g:ale_fix_on_save = 1
+    let g:ale_lint_on_text_changed = 'never'
 
 " Cpp
 Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
@@ -73,18 +68,21 @@ Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
 Plug 'shougo/neocomplete'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Valloric/YouCompleteMe'
+Plug 'junegunn/fzf.vim', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Initialize plugin system
 call plug#end()
 " }}}
 
 " Colorscheme {{{
+set t_Co=256
 set termguicolors
 set background=dark   " require
 syntax enable
 colorscheme onedark
 " }}}
 " Misc {{{
+set nocompatible
 set synmaxcol=200
 set scrolloff=3                 " Minimum lines to keep above and below cursor
 set backspace=indent,eol,start
@@ -146,11 +144,11 @@ set foldlevelstart=10   " start with fold level of 1
 set smartcase
 set incsearch   " search as characters are entered
 set hlsearch    " highlight matches
-" set showmatch   " highlight matching [{()}]
+set showmatch   " highlight matching [{()}]
 set ignorecase  " ignore case when searching
 " }}}
 " Leader Map Shortcuts {{{
-let mapleader=";"
+" let mapleader=";"
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -158,14 +156,13 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 "
 " Useful mappings for managing tabs
-" Use `$vim -p` open multi files
-map <leader>tn :tabnew<cr>
 map <C-n>      :tabnew<cr>
+map <leader>tn :tabnew<cr>
 map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>tt :tabnext<cr>
-map <Tab> :tabnext<cr>
+map <Tab>      :tabnext<cr>
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
@@ -175,12 +172,20 @@ au TabLeave * let g:lasttab = tabpagenr()
 command WW w !sudo tee % > /dev/null
 command W w
 command Wq wq
+command Q q
 set pastetoggle=<F3>
 " }}}
 
+" Airline {{{
+let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_buffers = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline_theme='onedark'
+" }}}
 " NERDTree {{{
 map <F2> :NERDTreeToggle<CR>
-
 autocmd StdinReadPre * let s:std_in=1
 " open a NERDTree automatically when vim starts up if no files were specified
 autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
@@ -264,5 +269,11 @@ let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " Ycm {{{
 let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
 " }}}
-
+" Easy align{{{
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
+" }}}
+"
 " vim:foldmethod=marker:foldlevel=0

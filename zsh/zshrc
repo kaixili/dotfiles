@@ -25,14 +25,13 @@ antigen bundles <<EOBUNDLES
   gitignore            # gi alias to fetch default .gitignore files from http://gitignore.io/
   github               # cli access, url shortener
   command-not-found    
-
+  web-search           
   extract              # 'x' alias - swiss knife for archive extracting
   cp                   # cp with progress bar (rsync)
   fzf                  # fuzzy search command using Ctrl-R
   git-open             # open remote url
-  web-search
-
   colored-man-pages    # adds colors to manpages
+  rupa/z
 
 # unixorn/warhol.plugin.zsh               # Colorize command output using grc and lscolors
 
@@ -41,7 +40,9 @@ antigen bundles <<EOBUNDLES
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-history-substring-search
 
-  rupa/z
+
+#  mafredri/zsh-async 
+#  sindresorhus/pure    # pretty, minimal and fast ZSH prompt
 EOBUNDLES
 
 # Load the theme.
