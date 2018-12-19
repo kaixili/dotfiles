@@ -16,8 +16,8 @@ local my_table = awful.util.table or gears.table -- 4.{0,1} compatibility
 local theme                                     = {}
 theme.confdir                                   = os.getenv("HOME") .. "/.config/awesome/themes/multicolor"
 theme.wallpaper                                 = theme.confdir .. "/wall.png"
-theme.font                                      = "xos4 Terminus 9"
-theme.widget_font                               = "Fira Code Medium 12" or "xos4 Terminus 10"
+theme.font                                      = "xos4 Terminus 10"
+theme.widget_font                               = "Fira Code Medium 10" or "xos4 Terminus 10"
 theme.menu_bg_normal                            = "#000000"
 theme.menu_bg_focus                             = "#000000"
 theme.bg_normal                                 = "#000000"
@@ -93,7 +93,7 @@ theme.titlebar_maximized_button_focus_active    = theme.confdir .. "/icons/title
 
 -- Changed
 theme.border_focus  = "#ff8c00"
-theme.useless_gap   = 0
+theme.useless_gap   = 2
 theme.border_width  = 2
 
 theme.bg_normal                                 = "#000000"
@@ -110,6 +110,11 @@ theme.fg_minimize                               = "#999999"
 --theme.border_focus                              = "#606060"
 --theme.border_marked                             = "#3ca4d8"
 
+theme.hotkeys_bg = "#282c34"
+theme.hotkeys_fg = "#ffffff"
+theme.hotkeys_modifiers_fg = "#fe8000"
+theme.hotkeys_font = "Fira Code Medium 11"
+theme.hotkeys_description_font = "Fira Code Medium 11"
 
 
 -- theme.wallpaper     = os.getenv("HOME") .. "/Pictures/wallpaper.jpg"
@@ -117,6 +122,7 @@ theme.wallpaper     = function(s)
     local i = s.index
     if (i == 1) then
         return os.getenv("HOME") .. "/Pictures/39058042_p0.jpg"
+        --return os.getenv("HOME") .. "/Pictures/ba4734305c6034a82dd7ff38c613495409237631.jpg"
     elseif (i == 2) then
         return os.getenv("HOME") .. "/Pictures/1080-1920.jpg"
     else
@@ -303,7 +309,7 @@ function theme.at_screen_connect(s)
     -- Create a tasklist widget
     s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, awful.util.tasklist_buttons)
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 20, bg = theme.bg_normal, fg = theme.fg_normal })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 20, bg = theme.bg_normal .. "55", fg = theme.fg_normal })
 
     -- Add widgets to the wibox
     s.mywibox:setup {

@@ -40,6 +40,7 @@ Plug 'roman/golden-ratio'
 let g:golden_ratio_exclude_nonmodifiable = 1
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-startify'
+Plug 'chrisbra/Colorizer'
 
 " Move
 Plug 'easymotion/vim-easymotion'
@@ -68,7 +69,6 @@ Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
 Plug 'shougo/neocomplete'
 Plug 'jiangmiao/auto-pairs'
 Plug 'Valloric/YouCompleteMe'
-Plug 'junegunn/fzf.vim', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " Initialize plugin system
 call plug#end()
@@ -275,5 +275,9 @@ xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
 nmap ga <Plug>(EasyAlign)
 " }}}
+" Colorizer {{{
+let g:colorizer_auto_filetype='css,html,lua,md'
+let g:colorizer_syntax = 1
+"}}}
 "
 " vim:foldmethod=marker:foldlevel=0
