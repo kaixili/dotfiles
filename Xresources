@@ -10,8 +10,7 @@
 ! X setting
 ! Xft.dpi:        90
 Xcursor.theme:  capitaine-cursors
-Xcursor.size: 16
-
+Xcursor.size: 24
 
 ! ROFI Color theme
 rofi.color-enabled:   true
@@ -19,7 +18,6 @@ rofi.color-window:    #273238, #273238, #1e2529
 rofi.color-normal:    #273238, #c1c1c1, #273238, #394249, #ffffff
 rofi.color-active:    #273238, #80cbc4, #273238, #394249, #80cbc4
 rofi.color-urgent:    #273238, #ff1844, #273238, #394249, #ff1844
-
 !rofi.separator-style: solid
 !rofi.sidebar-mode:    true
 rofi.show-icons:      true
@@ -46,35 +44,27 @@ URxvt.iconFile:         /usr/share/icons/Papirus/16x16/apps/urxvt.svg
 *.foreground:   #ABB2BF
 *.background:   #282C34
 *.cursorColor:  #ABB2BF
-
 ! black
 *.color0:       #282C34
 *.color8:       #3E4452
-
 ! red
 *.color1:       #E06C75
 *.color9:       #BE5046
-
 ! green
 *.color2:       #98C379
 *.color10:      #98C379
-
 ! yellow
 *.color3:       #E5C07B
 *.color11:      #D19A66
-
 ! blue
 *.color4:       #61AFEF
 *.color12:      #61AFEF
-
 ! magenta
 *.color5:       #C678DD
 *.color13:      #C678DD
-
 ! cyan
 *.color6:       #56B6C2
 *.color14:      #56B6C2
-
 ! white
 *.color7:       #ABB2BF
 *.color15:      #5C6370

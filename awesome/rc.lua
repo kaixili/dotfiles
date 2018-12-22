@@ -4,15 +4,6 @@
 --  ██╔══██║██║███╗██║██╔══╝  ╚════██║██║   ██║██║╚██╔╝██║██╔══╝  ██║███╗██║██║╚██╔╝██║
 --  ██║  ██║╚███╔███╔╝███████╗███████║╚██████╔╝██║ ╚═╝ ██║███████╗╚███╔███╔╝██║ ╚═╝ ██║
 --  ╚═╝  ╚═╝ ╚══╝╚══╝ ╚══════╝╚══════╝ ╚═════╝ ╚═╝     ╚═╝╚══════╝ ╚══╝╚══╝ ╚═╝     ╚═╝
---                         ████                      
---                        ▒▒███                      
---   ████████   ██████     ▒███  █████ ████  ██████  
---  ▒▒███▒▒███ ███▒▒███    ▒███ ▒▒███ ▒███  ▒▒▒▒▒███ 
---   ▒███ ▒▒▒ ▒███ ▒▒▒     ▒███  ▒███ ▒███   ███████ 
---   ▒███     ▒███  ███    ▒███  ▒███ ▒███  ███▒▒███ 
---   █████    ▒▒██████  ██ █████ ▒▒████████▒▒████████
---  ▒▒▒▒▒      ▒▒▒▒▒▒  ▒▒ ▒▒▒▒▒   ▒▒▒▒▒▒▒▒  ▒▒▒▒▒▒▒▒ 
---                                                   
 --[[
      Awesome WM configuration
      github.com/kaixili
@@ -117,8 +108,8 @@ local modkey       = "Mod4"
 local altkey       = "Mod1"
 local terminal     = "konsole" or "urxvtc" or "xterm"
 local editor       = os.getenv("EDITOR") or "vim" or "nano"
-local gui_editor   = "subl3"
-local guieditor    = "subl3"
+local gui_editor   = terminal .. "-e vim" or "subl3"
+local guieditor    = gui_editor
 local browser      = "google-chrome-stable"
 local screenlocker = "i3lock-fancy -f Press-Start-2P -p --"
 -- local screenshot   = "scrot -s ~/tmp/`date +'%Y-%m-%dT%H:%M:%S'`.png"
@@ -732,92 +723,6 @@ clientbuttons = gears.table.join(
 root.keys(globalkeys)
 -- }}}
 
--- {{{ Rules
--- Rules to apply to new clients (through the "manage" signal).
-awful.rules.rules = {
-    -- All clients will match this rule.
-    { rule = { },
-        properties = { border_width = beautiful.border_width,
-            border_color = beautiful.border_normal,
-            focus = awful.client.focus.filter,
-            raise = true,
-            keys = clientkeys,
-            buttons = clientbuttons,
-            screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-            size_hints_honor = false
-        }
-    },
-
-    -- Floating clients
-    { rule_any = {
-            instance = {
-                "DTA",  -- Firefox addon DownThemAll.
-            },
-            class = {
-            },
-
-            name = {
-                "Event Tester",  -- xev
-            },
-            role = {
-                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
-            }
-    }, properties = { floating = true, ontop = false }},
-
-    -- Set Firefox to always map on the first tag on screen 1.
-    --{ rule = { class = "Firefox" },
-    --  properties = { tag = awful.util.tagnames[2] } },
-
-    -- Titlebars
-    { rule_any = { type = { "dialog", "normal" } },
-    properties = { titlebars_enabled = true } },
-
-    -- Centered clients
-    { rule_any = {
-            type = {
-                "dialog",
-            },
-            class = {
-                "feh",
-            },
-            name = {
-                "Save As",
-            },
-            role = {
-                "GtkFileChooserDialog",
-            }
-        }, properties = {},
-        callback = function (c)
-            awful.placement.centered(c,{honor_workarea=true})
-        end
-    },
-
-    -- Hidden regardless of the theme setting
-    { rule_any = {
-        class = {
-          "qutebrowser",
-          "feh",
-          "Gimp",
-          "Sublime_text",
-          "Google-chrome",
-          --"discord",
-          --"TelegramDesktop",
-          "Firefox",
-          "Chromium-browser",
-          "Rofi",
-          },
-      }, properties = {},
-      callback = function (c)
-        if not beautiful.titlebars_imitate_borders then
-            awful.titlebar.hide(c, beautiful.titlebar_position)
-        end
-      end
-    },
-
-}
--- }}}
-
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
@@ -943,6 +848,92 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- client.connect_signal("unfocus", function(c) c.border_width = 0 end)
 -- }}}
 
+-- {{{ Rules
+-- Rules to apply to new clients (through the "manage" signal).
+awful.rules.rules = {
+    -- All clients will match this rule.
+    { rule = { },
+        properties = { border_width = beautiful.border_width,
+            border_color = beautiful.border_normal,
+            focus = awful.client.focus.filter,
+            raise = true,
+            keys = clientkeys,
+            buttons = clientbuttons,
+            screen = awful.screen.preferred,
+            placement = awful.placement.no_overlap+awful.placement.no_offscreen,
+            size_hints_honor = false
+        }
+    },
+
+    -- Floating clients
+    { rule_any = {
+            instance = {
+                "DTA",  -- Firefox addon DownThemAll.
+            },
+            class = {
+            },
+
+            name = {
+                "Event Tester",  -- xev
+            },
+            role = {
+                "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
+            }
+    }, properties = { floating = true, ontop = false }},
+
+    -- Set Firefox to always map on the first tag on screen 1.
+    --{ rule = { class = "Firefox" },
+    --  properties = { tag = awful.util.tagnames[2] } },
+
+    -- Titlebars
+    { rule_any = { type = { "dialog", "normal" } },
+    properties = { titlebars_enabled = true } },
+
+    -- Centered clients
+    { rule_any = {
+            type = {
+                "dialog",
+            },
+            class = {
+                "feh",
+            },
+            name = {
+                "Save As",
+            },
+            role = {
+                "GtkFileChooserDialog",
+            }
+        }, properties = {},
+        callback = function (c)
+            awful.placement.centered(c,{honor_workarea=true})
+        end
+    },
+
+    -- Hidden regardless of the theme setting
+    { rule_any = {
+        class = {
+          "qutebrowser",
+          "feh",
+          "Gimp",
+          "Sublime_text",
+          "Google-chrome",
+          --"discord",
+          --"TelegramDesktop",
+          "Firefox",
+          "Chromium-browser",
+          "Rofi",
+          },
+      }, properties = {},
+      callback = function (c)
+        if not beautiful.titlebars_imitate_borders then
+            awful.titlebar.hide(c, beautiful.titlebar_position)
+        end
+      end
+    },
+
+}
+-- }}}
+
 -- {{{ Addon@ Tyrannical: Dynamic Tags
 tyrannical.tags = {
     { 
@@ -1023,6 +1014,7 @@ tyrannical.properties.intrusive = {
     "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
     "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
     "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
+    "QuakeDD"       ,
 }
 
 -- Ignore the tiled layout for the matching clients

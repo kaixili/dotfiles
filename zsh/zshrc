@@ -4,18 +4,16 @@
 #  ███╔╝  ╚════██║██╔══██║
 # ███████╗███████║██║  ██║
 # ╚══════╝╚══════╝╚═╝  ╚═╝
-#                        
 
 
+# Set Global Path
 export DOTFILES=$HOME/.dotfiles
 
+# Auto Download Plug Manager
 [ -f $DOTFILES/zsh/antigen.zsh  ] || curl -L git.io/antigen > $DOTFILES/zsh/antigen.zsh 
-
+# Start Plug Manager
 source $DOTFILES/zsh/antigen.zsh
-
-# Auto update theme
-[ -f .zshrc.zwc ] && [ .zshrc.zwc -ot .dotfiles/zsh/theme/oxide.zsh-theme ] && antigen reset && echo "Theme update."
-
+# Plugin {{{
 # Load the oh-my-zsh's library.
 antigen use oh-my-zsh
 
@@ -33,24 +31,26 @@ antigen bundles <<EOBUNDLES
   colored-man-pages    # adds colors to manpages
   rupa/z
 
-# unixorn/warhol.plugin.zsh               # Colorize command output using grc and lscolors
 
   zsh-users/zsh-autosuggestions
   zsh-users/zsh-completions
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-history-substring-search
 
-
 #  mafredri/zsh-async 
+#  unixorn/warhol.plugin.zsh               # Colorize command output using grc and lscolors
 #  sindresorhus/pure    # pretty, minimal and fast ZSH prompt
 EOBUNDLES
-
+# }}}
+# Theme {{{
+# Auto update theme
+[ -f .zshrc.zwc ] && [ .zshrc.zwc -ot .dotfiles/zsh/theme/oxide.zsh-theme ] && antigen reset && echo "Theme update."
 # Load the theme.
 # If change theme, run ` $ antigen reset `
 # antigen theme robbyrussell
 # antigen theme fox
 antigen theme $DOTFILES/zsh/theme oxide --no-local-clone
-
+#}}}
 # Tell Antigen that you're done.
 antigen apply
 
@@ -60,3 +60,5 @@ bindkey '^f' forward-word
 source $DOTFILES/zsh/history.zsh
 source $DOTFILES/zsh/user.setting.zsh
 [ -f $DOTFILES/zsh/zsh.local ] && source $DOTFILES/zsh/zsh.local
+
+# vim:foldmethod=marker:foldlevel=0

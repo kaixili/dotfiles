@@ -1,19 +1,20 @@
 [color]
-  diff = auto
-  status = auto
-  branch = auto
-  ui = true
-  interactive = auto
+    diff        = auto
+    status      = auto
+    branch      = auto
+    ui          = true
+    interactive = auto
 [user]
-  email = lkx810@gmail.com
-  name = kaixili
+    email       = lkx810@gmail.com
+    name        = kaixili
+    signingkey  = 63F06F1058B2D751
 [push]
-  default = simple
+    default     = simple
 [github]
-  user = kaixili
+    user        = kaixili
 [alias]
-  lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
+    lg          = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 [merge]
-  tool = vimdiff
+    tool        = vimdiff
 [diff]
-  tool = vimdiff
+    tool        = vimdiff

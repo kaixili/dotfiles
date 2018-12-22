@@ -5,11 +5,11 @@
 " ╚██╗ ██╔╝██║██║╚██╔╝██║
 "  ╚████╔╝ ██║██║ ╚═╝ ██║
 "   ╚═══╝  ╚═╝╚═╝     ╚═╝
-"
-" github.com/kaixili
-" 2018/12/09
-" https://vimawesome.com/
-"
+" [[
+"    github.com/kaixili
+"    2018/12/09
+"    https://vimawesome.com/
+" ]]
 
 " Auto Installation {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
@@ -23,12 +23,7 @@ call plug#begin('~/.vim/plugged')
 
 " Vim
 Plug 'vimwiki/vimwiki'          " Personal wiki
-    let g:vimwiki_list = [{'path': '~/.wiki/'}]
 Plug 'ctrlpvim/ctrlp.vim'
-    let g:ctrlp_match_window = 'bottom,order:ttb'
-    let g:ctrlp_switch_buffer = 0
-    let g:ctrlp_working_path_mode = 0
-    let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
 
 " UI
 Plug 'joshdick/onedark.vim'
@@ -37,7 +32,6 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'sheerun/vim-polyglot'    " A collection of language packs for Vim
 Plug 'airblade/vim-gitgutter'
 Plug 'roman/golden-ratio'
-let g:golden_ratio_exclude_nonmodifiable = 1
 Plug 'scrooloose/nerdtree'
 Plug 'mhinz/vim-startify'
 Plug 'chrisbra/Colorizer'
@@ -54,13 +48,6 @@ Plug 'junegunn/vim-easy-align'
 
 " Lint
 Plug 'w0rp/ale'
-    let g:ale_linters = {
-          \   'python': ['flake8'],
-          \   'C++': ['clang-format'],
-          \}
-    let g:ale_fix_on_save = 1
-    let g:ale_lint_on_text_changed = 'never'
-
 " Cpp
 Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
 
@@ -176,6 +163,25 @@ command Q q
 set pastetoggle=<F3>
 " }}}
 
+" Plugin Setting
+""""""""""""""""
+" Ale {{{
+let g:ale_linters = {
+            \   'python': ['flake8'],
+            \   'C++': ['clang-format'],
+            \}
+let g:ale_fix_on_save = 1
+let g:ale_lint_on_text_changed = 'never'
+" }}}
+" Ctrlp {{{
+let g:ctrlp_match_window = 'bottom,order:ttb'
+let g:ctrlp_switch_buffer = 0
+let g:ctrlp_working_path_mode = 0
+let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
+" }}}
+" Wiki {{{
+let g:vimwiki_list = [{'path': '~/.wiki/'}]
+" }}}
 " Airline {{{
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1

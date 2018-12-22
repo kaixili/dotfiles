@@ -14,4 +14,5 @@ alias m='make '
 # }}}
 #
 export TERM='xterm-256color'
+export GPG_TTY=$(tty)
 
