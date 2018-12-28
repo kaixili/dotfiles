@@ -8,7 +8,7 @@
 ! ----------------------------------------------------------------------------------
 
 ! X setting
-! Xft.dpi:        90
+Xft.dpi:        106
 Xcursor.theme:  capitaine-cursors
 Xcursor.size: 24
 

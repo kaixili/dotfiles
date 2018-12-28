@@ -16,3 +16,4 @@ alias m='make '
 export TERM='xterm-256color'
 export GPG_TTY=$(tty)
 
+export PATH=${HOME}/.local/bin:${HOME}/.gem/ruby/2.3.0/bin:${HOME}/node_modules/.bin/:$PATH:${HOME}/bin
