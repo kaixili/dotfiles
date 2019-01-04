@@ -27,9 +27,9 @@ local screen_width = awful.screen.focused().geometry.width
 local screen_height = awful.screen.focused().geometry.height
 
 theme.wallpaper = os.getenv("HOME") .. "/.config/awesome/themes/" .. theme_name .. "/wall.jpg"
-theme.font          = "monospace 12"
---theme.font          = "Noto Serif Medium Italic Nerd Font Complete 12"
+--theme.font          = "monospace 12"
 --theme.font          = "Iosevka Term medium 12"
+theme.font          = "Iosevka Nerd Font Medium 12"
 --theme.font          = "sans-serif 12"
 
 local xbackground = xrdb.background or	"#1E2541"
@@ -343,9 +343,9 @@ theme.desktop_mode_text_tile                 = ""
 theme.desktop_mode_text_max                  = ""
 -- Minimal tasklist widget variables
 theme.minimal_tasklist_visible_clients_color = focused_color
-theme.minimal_tasklist_visible_clients_text  = "  "
+theme.minimal_tasklist_visible_clients_text  = ""
 theme.minimal_tasklist_hidden_clients_color  = xcolor8
-theme.minimal_tasklist_hidden_clients_text   = "  "
+theme.minimal_tasklist_hidden_clients_text   = " "
 
 
 -- Generate Awesome icon:

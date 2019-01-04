@@ -9,8 +9,8 @@
 
 ! X setting
 Xft.dpi:        106
-Xcursor.theme:  capitaine-cursors
-Xcursor.size: 24
+Xcursor.theme:  breeze_cursors
+Xcursor.size:   24
 
 ! ROFI Color theme
 rofi.color-enabled:   true

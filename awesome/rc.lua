@@ -25,9 +25,9 @@ local hotkeys_popup = require("awful.hotkeys_popup").widget
 require("awful.hotkeys_popup.keys") 
 local my_table      = awful.util.table or gears.table -- 4.{0,1} compatibility
 
-local freedesktop   = require("freedesktop")
 local lain          = require("lain")
-local tyrannical    = require("tyrannical")
+-- local tyrannical    = require("tyrannical")
+-- local freedesktop   = require("freedesktop")
 -- }}}
 
 -- Theme {{{
@@ -119,7 +119,7 @@ local runview      = "rofi -show run"
 
 
 awful.util.terminal = terminal
-awful.util.tagnames = { '[1:Main]', '[2:Web]', '[3:Term]', '[4]' ,'[5:Music]', '[6:Other]' }
+awful.util.tagnames = { '', '[2:Web]', '[3:Term]', '[4]' ,'[5:Music]', '[6:Other]' }
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
@@ -295,7 +295,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.quake = lain.util.quake({ app = awful.util.terminal })
     set_wallpaper(s)
     -- Tags
-    -- awful.tag(awful.util.tagnames, s, awful.layout.layouts)
+    awful.tag(awful.util.tagnames, s, awful.layout.layouts)
     if beautiful.at_screen_connect then
         beautiful.at_screen_connect(s) 
     end
@@ -935,108 +935,108 @@ awful.rules.rules = {
 -- }}}
 
 -- {{{ Addon@ Tyrannical: Dynamic Tags
-tyrannical.tags = {
-    { 
-        name        = "  ",                 -- Call the tag "Term"
-        init        = true,                   -- Load the tag on startup
-        exclusive   = true,                   -- Refuse any other type of clients (by classes)
-        -- screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
-        screen      = 1,                  -- Create this tag on screen 1 and screen 2
-        layout      = awful.layout.suit.floating, -- Use the tile layout
-        instance    = {"dev", "ops"},         -- Accept the following instances. This takes precedence over 'class'
-        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
-            "xterm" ,
-            "urxvt" ,
-            "aterm",
-            "URxvt",
-            "XTerm",
-            "konsole",
-            "terminator",
-            "gnome-terminal"
-        }
-    } ,
-    {
-        name        = "",
-        init        = true,
-        exclusive   = true,
-        --icon        = "~net.png",                 -- Use this icon for the tag (uncomment with a real path)
-        screen      = { 1, 2 },
-        layout      = awful.layout.suit.tile,      -- Use the max layout
-        class = {
-            "Opera",
-            "Firefox",
-            "Rekonq",
-            "Dillo",
-            "Arora",
-            "Chromium",
-            "nightly",
-            "minefield",
-            "Google-chrome",
-    }
-    } ,
-
-    {
-        name        = "  ",
-        init        = true,
-        exclusive   = false,
-        screen      = 1,
-        layout      = awful.layout.suit.max                          ,
-        class ={
-        "Kate", "KDevelop", "Codeblocks", "Code::Blocks" , "DDD", "kate4"}
-    } ,
-    {
-        name        = "Doc",
-        init        = false, -- This tag wont be created at startup, but will be when one of the
-        -- client in the "class" section will start. It will be created on
-        -- the client startup screen
-        exclusive   = true,
-        layout      = awful.layout.suit.tile,
-        class       = {
-            "Assistant"     , "Okular"         , "Evince"    , "EPDFviewer"   , "xpdf",
-        "Xpdf"          ,                                        }
-    } ,
-    {
-        name        = "  ",
-        init        = true,
-        exclusive   = false,
-        screen      = 1,
-        layout      = awful.layout.suit.tile,
-        exec_once   = {"dolphin"}, --When the tag is accessed for the first time, execute this command
-        class  = {
-            "Thunar", "Konqueror", "Dolphin", "ark", "Nautilus","emelfm"
-        }
-    } ,
-
-}
-
--- Ignore the tag "exclusive" property for the following clients (matched by classes)
-tyrannical.properties.intrusive = {
-    "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
-    "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
-    "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
-    "QuakeDD"       ,
-}
-
--- Ignore the tiled layout for the matching clients
-tyrannical.properties.floating = {
-    "MPlayer"      , "pinentry"        , "ksnapshot"  , "pinentry"     , "gtksu"          ,
-    "xine"         , "feh"             , "kmix"       , "kcalc"        , "xcalc"          ,
-    "yakuake"      , "Select Color$"   , "kruler"     , "kcolorchooser", "Paste Special"  ,
-    "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer"
-}
-
--- Make the matching clients (by classes) on top of the default layout
-tyrannical.properties.ontop = {
-    "Xephyr"       , "ksnapshot"       , "kruler"
-}
-
--- Force the matching clients (by classes) to be centered on the screen on init
-tyrannical.properties.placement = {
-    kcalc = awful.placement.centered
-}
-
-tyrannical.settings.block_children_focus_stealing = true --Block popups ()
-tyrannical.settings.group_children = true --Force popups/dialogs to have the same tags as the parent client
+--tyrannical.tags = {
+--    { 
+--        name        = " ",                 -- Call the tag "Term"
+--        init        = true,                   -- Load the tag on startup
+--        exclusive   = true,                   -- Refuse any other type of clients (by classes)
+--        -- screen      = {1,2},                  -- Create this tag on screen 1 and screen 2
+--        screen      = 1,                  -- Create this tag on screen 1 and screen 2
+--        layout      = awful.layout.suit.floating, -- Use the tile layout
+--        instance    = {"dev", "ops"},         -- Accept the following instances. This takes precedence over 'class'
+--        class       = { --Accept the following classes, refuse everything else (because of "exclusive=true")
+--            "xterm" ,
+--            "urxvt" ,
+--            "aterm",
+--            "URxvt",
+--            "XTerm",
+--            "konsole",
+--            "terminator",
+--            "gnome-terminal"
+--        }
+--    } ,
+--    {
+--        name        = " ",
+--        init        = true,
+--        exclusive   = true,
+--        --icon        = "~net.png",                 -- Use this icon for the tag (uncomment with a real path)
+--        screen      = { 1, 2 },
+--        layout      = awful.layout.suit.tile,      -- Use the max layout
+--        class = {
+--            "Opera",
+--            "Firefox",
+--            "Rekonq",
+--            "Dillo",
+--            "Arora",
+--            "Chromium",
+--            "nightly",
+--            "minefield",
+--            "Google-chrome",
+--    }
+--    } ,
+--
+--    {
+--        name        = " ",
+--        init        = true,
+--        exclusive   = false,
+--        screen      = 1,
+--        layout      = awful.layout.suit.max                          ,
+--        class ={
+--        "Kate", "KDevelop", "Codeblocks", "Code::Blocks" , "DDD", "kate4"}
+--    } ,
+--    {
+--        name        = "Doc",
+--        init        = false, -- This tag wont be created at startup, but will be when one of the
+--        -- client in the "class" section will start. It will be created on
+--        -- the client startup screen
+--        exclusive   = true,
+--        layout      = awful.layout.suit.tile,
+--        class       = {
+--            "Assistant"     , "Okular"         , "Evince"    , "EPDFviewer"   , "xpdf",
+--        "Xpdf"          ,                                        }
+--    } ,
+--    {
+--        name        = " ",
+--        init        = true,
+--        exclusive   = false,
+--        screen      = 1,
+--        layout      = awful.layout.suit.tile,
+--        exec_once   = {"dolphin"}, --When the tag is accessed for the first time, execute this command
+--        class  = {
+--            "Thunar", "Konqueror", "Dolphin", "ark", "Nautilus","emelfm"
+--        }
+--    } ,
+--
+--}
+--
+---- Ignore the tag "exclusive" property for the following clients (matched by classes)
+--tyrannical.properties.intrusive = {
+--    "ksnapshot"     , "pinentry"       , "gtksu"     , "kcalc"        , "xcalc"               ,
+--    "feh"           , "Gradient editor", "About KDE" , "Paste Special", "Background color"    ,
+--    "kcolorchooser" , "plasmoidviewer" , "Xephyr"    , "kruler"       , "plasmaengineexplorer",
+--    "QuakeDD"       ,
+--}
+--
+---- Ignore the tiled layout for the matching clients
+--tyrannical.properties.floating = {
+--    "MPlayer"      , "pinentry"        , "ksnapshot"  , "pinentry"     , "gtksu"          ,
+--    "xine"         , "feh"             , "kmix"       , "kcalc"        , "xcalc"          ,
+--    "yakuake"      , "Select Color$"   , "kruler"     , "kcolorchooser", "Paste Special"  ,
+--    "New Form"     , "Insert Picture"  , "kcharselect", "mythfrontend" , "plasmoidviewer"
+--}
+--
+---- Make the matching clients (by classes) on top of the default layout
+--tyrannical.properties.ontop = {
+--    "Xephyr"       , "ksnapshot"       , "kruler"
+--}
+--
+---- Force the matching clients (by classes) to be centered on the screen on init
+--tyrannical.properties.placement = {
+--    kcalc = awful.placement.centered
+--}
+--
+--tyrannical.settings.block_children_focus_stealing = true --Block popups ()
+--tyrannical.settings.group_children = true --Force popups/dialogs to have the same tags as the parent client
 
 -- }}}
 

@@ -103,10 +103,10 @@ weather_timer:connect_signal("timeout", function ()
         resp = json.decode(resp_json)
         if (resp.cod ~= 401) then
             icon_widget.image = path_to_icons .. icon_map[resp.weather[1].icon]
-            temp_widget:set_text(to_celcius(resp.main.temp) .. "°C")
+            temp_widget:set_text(" " .. to_celcius(resp.main.temp) .. "°C")
         else
             icon_widget.image = path_to_icons .. "network-wired-disconnected-symbolic.svg"
-            temp_widget:set_text("No Data")
+            temp_widget:set_text(" No Data")
         end
     end
 end)

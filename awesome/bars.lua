@@ -13,7 +13,6 @@ local desktop_mode_widget = require("noodle.desktop_mode_widget")
 local volumebar_widget    = require("noodle.volumebar_widget")
 local minimal_tasklist    = require("noodle.minimal_tasklist")
 local weather             = require("noodle.weather_widget")
-weather = wibox.container.margin( weather, 0, 0, 8, 8 )
 
 -- Volume widget prefix
 volumebar_prefix             = wibox.widget.textbox(" ")
@@ -143,6 +142,7 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             --mylauncher,
+            pad,
             s.mytaglist,
             textseparator,
             minimal_tasklist,
@@ -166,7 +166,7 @@ awful.screen.connect_for_each_screen(function(s)
             volumebar_prefix,
             volumebar_widget,
             textseparator,
-            weather,
+            wibox.container.place(weather),
             --textseparator,
             --memory_prefix,
             --mem_widget,
@@ -185,10 +185,10 @@ awful.screen.connect_for_each_screen(function(s)
             mytextclock,
             textseparator,
             -- s.mylayoutbox,
-            s.layoutbox,
-            textseparator,
+            -- s.layoutbox,
+            -- textseparator,
             desktop_mode_widget,
-            --pad,
+            pad,
             pad
         },
     }
