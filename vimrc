@@ -11,29 +11,29 @@
 "    https://vimawesome.com/
 " ]]
 
-" Auto Installation {{{
+" Vim-Plug Auto Installation {{{
 if empty(glob('~/.vim/autoload/plug.vim'))
   silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
     \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
   autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
 endif
 " }}}
-" Plug {{{
+" Plug Manager {{{
 call plug#begin('~/.vim/plugged')
 
 " Vim
-Plug 'vimwiki/vimwiki'          " Personal wiki
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 " UI
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'mhinz/vim-startify'      " Start screen
 Plug 'sheerun/vim-polyglot'    " A collection of language packs for Vim
 Plug 'airblade/vim-gitgutter'
-Plug 'roman/golden-ratio'
+" Plug 'roman/golden-ratio'
 Plug 'scrooloose/nerdtree'
-Plug 'mhinz/vim-startify'
 Plug 'chrisbra/Colorizer'
 
 " Move
@@ -42,20 +42,34 @@ Plug 'christoomey/vim-tmux-navigator'
 Plug 'justinmk/vim-sneak'
 
 " Edit
-Plug 'tpope/vim-surround'
-Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/vim-easy-align'
+Plug 'tpope/vim-surround'       " Easily delete, change and add such surroundings in pairs.
+Plug 'scrooloose/nerdcommenter' " Fast commented
+Plug 'junegunn/vim-easy-align'  
 
 " Lint
 Plug 'w0rp/ale'
+
 " Cpp
-Plug 'vim-scripts/a.vim', { 'for': 'cpp' }
+Plug 'vim-scripts/a.vim', { 'for': 'cpp' } " Alternate Files quickly (.c --> .h etc)
 
 " Complete
-" Plug 'ervandew/supertab'
-Plug 'shougo/neocomplete'
 Plug 'jiangmiao/auto-pairs'
+" Plug 'shougo/neocomplete'
 Plug 'Valloric/YouCompleteMe'
+" Dark powered asynchronous completion framework for neovim/Vim8
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
+Plug 'zchee/deoplete-clang'
+Plug 'Shougo/neoinclude.vim'
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
 
 " Initialize plugin system
 call plug#end()
@@ -68,6 +82,7 @@ syntax enable
 colorscheme onedark
 " }}}
 " Misc {{{
+set undodir=~/.vim/undodir      " Persistent Undo
 set nocompatible
 set synmaxcol=200
 set scrolloff=3                 " Minimum lines to keep above and below cursor
@@ -134,7 +149,7 @@ set showmatch   " highlight matching [{()}]
 set ignorecase  " ignore case when searching
 " }}}
 " Leader Map Shortcuts {{{
-" let mapleader=";"
+let mapleader=";"
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -149,6 +164,10 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove
 map <leader>tt :tabnext<cr>
 map <Tab>      :tabnext<cr>
+
+" Fast Jump
+map <C-a> <Home>
+map <C-e> <End>
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
 nmap <Leader>tl :exe "tabn ".g:lasttab<CR>
@@ -167,19 +186,34 @@ set pastetoggle=<F3>
 " Ale {{{
 let g:ale_linters = {
             \   'python': ['flake8'],
-            \   'C++': ['clang-format'],
+            \   'C++': ['clang-format', 'clang', 'cppcheck'],
+            \   'C': ['clang-format', 'clang', 'cppcheck'],
+            \   'CUDA': ['nvcc'],
+            \   'LUA': ['luac'],
             \}
 let g:ale_fix_on_save = 1
-let g:ale_lint_on_text_changed = 'never'
+" let g:ale_lint_on_text_changed = 'never'
+let g:ale_sign_column_always = 1
+let g:ale_echo_msg_error_str = 'E'
+let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+" }}}
+" Ycm {{{
+let g:ycm_global_ycm_extra_conf        = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+let g:ycm_key_list_select_completion   = ['<C-n>', '<C-j>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<C-k>']
+let g:deoplete#enable_at_startup       = 1
+nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
+nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
+nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
+" }}}
+" Auto Pair {{{
 " }}}
 " Ctrlp {{{
 let g:ctrlp_match_window = 'bottom,order:ttb'
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_custom_ignore = '\vbuild/|dist/|venv/|target/|\.(o|swp|pyc|egg)$'
-" }}}
-" Wiki {{{
-let g:vimwiki_list = [{'path': '~/.wiki/'}]
 " }}}
 " Airline {{{
 let g:airline_powerline_fonts = 1
@@ -190,16 +224,16 @@ let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline_theme='onedark'
 " }}}
 " NERDTree {{{
-map <F2> :NERDTreeToggle<CR>
+map <F4> :NERDTreeToggle<CR>
 autocmd StdinReadPre * let s:std_in=1
 " open a NERDTree automatically when vim starts up if no files were specified
-autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
+" autocmd VimEnter * if argc() == 0 && !exists("s:std_in") | NERDTree | endif
 " open NERDTree automatically when vim starts up on opening a directory
 autocmd VimEnter * if argc() == 1 && isdirectory(argv()[0]) && !exists("s:std_in") | exe 'NERDTree' argv()[0] | wincmd p | ene | endif
 " close vim if the only window left open is a NERDTree
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 " }}}
-" SuperComplete {{{
+" NeoComplete {{{
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 0
@@ -271,9 +305,6 @@ endif
 " https://github.com/c9s/perlomni.vim
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " }}}
-" Ycm {{{
-let g:ycm_global_ycm_extra_conf='~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
-" }}}
 " Easy align{{{
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
@@ -281,8 +312,48 @@ xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 " }}}
 " Colorizer {{{
-let g:colorizer_auto_filetype='css,html,lua,md'
-let g:colorizer_syntax = 1
+let g:colorizer_auto_filetype = 'css,html,lua,md'
+let g:colorizer_syntax        = 1
 "}}}
+" Deoplete {{{
+let g:deoplete#enable_at_startup = 1
+" }}}
+"  NERD Commenter {{{
+"  
+"  [count]<leader>cc |NERDComComment|
+"  [count]<leader>c<space> |NERDComToggleComment|
+"
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+" Use compact syntax for prettified multi-line comments
+let g:NERDCompactSexyComs = 1
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'
+" Set a language to use its alternate delimiters by default
+let g:NERDAltDelims_java = 1
+" Add your own custom formats or override the defaults
+let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
+" Allow commenting and inverting empty lines (useful when commenting a region)
+let g:NERDCommentEmptyLines = 1
+" Enable trimming of trailing whitespace when uncommenting
+let g:NERDTrimTrailingWhitespace = 1
+" Enable NERDCommenterToggle to check all selected lines is commented or not 
+let g:NERDToggleCheckAllLines = 1
+" }}}
+" Language Client NeoVim {{{
+" Required for operations modifying multiple buffers like rename.
+set hidden
+"let g:LanguageClient_serverCommands = {
+"    \ 'rust': ['~/.cargo/bin/rustup', 'run', 'stable', 'rls'],
+"    \ 'javascript': ['/usr/local/bin/javascript-typescript-stdio'],
+"    \ 'javascript.jsx': ['tcp://127.0.0.1:2089'],
+"    \ 'python': ['/usr/local/bin/pyls'],
+"    \ }
+nnoremap <F5> :call LanguageClient_contextMenu()<CR>
+" Or map each action separately
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
+" }}}
 "
 " vim:foldmethod=marker:foldlevel=0
