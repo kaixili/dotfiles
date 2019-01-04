@@ -1,9 +1,3 @@
 [submodule "ohmytmux"]
 	path = tmux/ohmytmux
 	url =  https://github.com/gpakosz/.tmux
-[submodule "awesome/lain"]
-	path = awesome/lain
-	url = https://github.com/lcpz/lain
-[submodule "awesome/freedesktop"]
-	path = awesome/freedesktop
-	url = https://github.com/lcpz/awesome-freedesktop
