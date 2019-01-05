@@ -8,7 +8,6 @@
 " [[
 "    github.com/kaixili
 "    2018/12/09
-"    https://vimawesome.com/
 " ]]
 
 " Vim-Plug Auto Installation {{{
@@ -29,8 +28,8 @@ Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'joshdick/onedark.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'mhinz/vim-startify'      " Start screen
-Plug 'sheerun/vim-polyglot'    " A collection of language packs for Vim
+Plug 'mhinz/vim-startify'       " Start screen
+Plug 'sheerun/vim-polyglot'     " A collection of language packs for Vim
 Plug 'airblade/vim-gitgutter'
 " Plug 'roman/golden-ratio'
 Plug 'scrooloose/nerdtree'
@@ -44,7 +43,11 @@ Plug 'justinmk/vim-sneak'
 " Edit
 Plug 'tpope/vim-surround'       " Easily delete, change and add such surroundings in pairs.
 Plug 'scrooloose/nerdcommenter' " Fast commented
-Plug 'junegunn/vim-easy-align'  
+Plug 'junegunn/vim-easy-align'
+Plug 'honza/vim-snippets'
+Plug 'tpope/vim-repeat'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'ntpeters/vim-better-whitespace'
 
 " Lint
 Plug 'w0rp/ale'
@@ -75,6 +78,8 @@ Plug 'autozimu/LanguageClient-neovim', {
 call plug#end()
 " }}}
 
+" User Setting
+""""""""""""""""
 " Colorscheme {{{
 set termguicolors
 set background=dark   " require
@@ -138,7 +143,6 @@ set foldenable          " enable folding
 set foldmethod=indent   " fold based on indent level
 set foldnestmax=10      " max 10 depth
 set modelines=1         " tell Vim to check just the final line of the file for a modeline
-nnoremap <space> za
 set foldlevelstart=10   " start with fold level of 1
 " }}}
 " Search {{{
@@ -149,7 +153,7 @@ set showmatch   " highlight matching [{()}]
 set ignorecase  " ignore case when searching
 " }}}
 " Leader Map Shortcuts {{{
-let mapleader=";"
+let mapleader="\<Space>"
 " Smart way to move between windows
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -206,8 +210,6 @@ let g:deoplete#enable_at_startup       = 1
 nnoremap <leader>gl :YcmCompleter GoToDeclaration<CR>
 nnoremap <leader>gf :YcmCompleter GoToDefinition<CR>
 nnoremap <leader>gg :YcmCompleter GoToDefinitionElseDeclaration<CR>
-" }}}
-" Auto Pair {{{
 " }}}
 " Ctrlp {{{
 let g:ctrlp_match_window = 'bottom,order:ttb'
@@ -306,6 +308,7 @@ endif
 let g:neocomplete#sources#omni#input_patterns.perl = '\h\w*->\h\w*\|\h\w*::'
 " }}}
 " Easy align{{{
+" [count]vipga
 " Start interactive EasyAlign in visual mode (e.g. vipga)
 xmap ga <Plug>(EasyAlign)
 " Start interactive EasyAlign for a motion/text object (e.g. gaip)
@@ -319,10 +322,9 @@ let g:colorizer_syntax        = 1
 let g:deoplete#enable_at_startup = 1
 " }}}
 "  NERD Commenter {{{
-"  
 "  [count]<leader>cc |NERDComComment|
+"  [count]<leader>cu |Undo|
 "  [count]<leader>c<space> |NERDComToggleComment|
-"
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
 " Use compact syntax for prettified multi-line comments
@@ -337,7 +339,7 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 let g:NERDCommentEmptyLines = 1
 " Enable trimming of trailing whitespace when uncommenting
 let g:NERDTrimTrailingWhitespace = 1
-" Enable NERDCommenterToggle to check all selected lines is commented or not 
+" Enable NERDCommenterToggle to check all selected lines is commented or not
 let g:NERDToggleCheckAllLines = 1
 " }}}
 " Language Client NeoVim {{{
@@ -355,5 +357,9 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 " }}}
-"
+" Better Whitespace {{{
+let g:better_whitespace_enabled=1
+let g:strip_whitespace_on_save=1
+" }}}
+
 " vim:foldmethod=marker:foldlevel=0
