@@ -144,7 +144,7 @@ local symb = "  "
 local symb = "  "
 theme.tagnames = { symb, symb, symb, symb, symb, symb, symb, symb, symb, symb }
 -- Substitutes:   
--- Nature:         
+-- Nature:        
 --theme.tagnames = { "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  ", "  " }
 --theme.tagnames = { " i ", " ii ", " iii ", " iv ", " v ", " vi ", " vii ", " viii ", " ix ", " x " }
 
@@ -244,7 +244,7 @@ theme.taglist_bg_empty       = xcolor0 .. "00"
 theme.taglist_fg_empty       = xcolor15
 theme.taglist_bg_urgent      = xcolor0 .. "00"
 theme.taglist_fg_urgent      = urgent_color
-theme.taglist_disable_icon   = true
+theme.taglist_disable_icon   = false
 theme.taglist_spacing        = dpi(0)
 --theme.taglist_item_roundness = 0
 theme.taglist_item_roundness = theme.border_radius

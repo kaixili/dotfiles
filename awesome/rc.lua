@@ -96,20 +96,24 @@ local function run_once(cmd_arr)
 end
 
 run_once({
-        -- 窗口渲染器
-        "compton &",
-        -- 打字避免触摸板滑动
-        -- syndaemon -i 0.5 -t -K -R -d",
+        -- Window rendering
+        "compton",
         -- 隐藏鼠标
         "unclutter -root",
-        -- 网络管理
-        --    "nm-applet --sm-disable &",
-        -- Chrome 加快启动速度
-        "google-chrome-stable --no-startup-window &",
-        -- 输入法
-        "fcitx &",
-        -- 截图
-        "flameshot &"
+        -- IME
+        "fcitx",
+        -- polkit
+        "/usr/lib/polkit-kde-authentication-agent-1",
+        -- screenshot
+        "flameshot &",
+        -- Chrome start acceleration
+        "google-chrome-stable --no-startup-window",
+        -- Network Manager
+        -- "nm-applet --sm-disable",
+        -- 打字避免触摸板滑动
+        -- syndaemon -i 0.5 -t -K -R -d",
+        -- 剪贴板
+        "klipper",
     })
 --]]
 
@@ -126,38 +130,84 @@ local browser      = "google-chrome-stable"
 local screenlocker = "i3lock-fancy -f Press-Start-2P -p --"
 -- local screenshot   = "scrot -s ~/tmp/`date +'%Y-%m-%dT%H:%M:%S'`.png"
 local screenshot   = "flameshot gui"
-local tabview      = "rofi -show window"
-local runview      = "rofi -show combi"
+local tabview      = "rofi -show window -sorting-method fzf -sort "
+local runview      = "rofi -show combi -sorting-method fzf -sort "
+
+awful.util.terminal = terminal
 -- }}}
 
 -- {{{ Taglist
-awful.util.terminal = terminal
-
 awful.util.tagnames = { '', '[2:Web]', '[3:Term]', '[4]' ,'[5:Music]', '[6:Other]' }
 awful.layout.layouts = {
     awful.layout.suit.floating,
     awful.layout.suit.tile,
     awful.layout.suit.max,
-    --awful.layout.suit.tile.left,
-    --awful.layout.suit.tile.bottom,
-    --awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.max.fullscreen,
-    --awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.nw,
-    --awful.layout.suit.corner.ne,
-    --awful.layout.suit.corner.sw,
-    --awful.layout.suit.corner.se,
-    --lain.layout.cascade,
-    --lain.layout.cascade.tile,
-    --lain.layout.centerwork,
-    --lain.layout.centerwork.horizontal,
-    --lain.layout.termfair,
-    --lain.layout.termfair.center,
+--    awful.layout.suit.tile.left,
+--    awful.layout.suit.tile.bottom,
+--    awful.layout.suit.tile.top,
+--    awful.layout.suit.fair,
+--    awful.layout.suit.fair.horizontal,
+--    awful.layout.suit.spiral,
+--    awful.layout.suit.spiral.dwindle,
+--    awful.layout.suit.max.fullscreen,
+--    awful.layout.suit.magnifier,
+--    awful.layout.suit.corner.nw,
+--    awful.layout.suit.corner.ne,
+--    awful.layout.suit.corner.sw,
+--    awful.layout.suit.corner.se,
+--    lain.layout.cascade,
+--    lain.layout.cascade.tile,
+--    lain.layout.centerwork,
+--    lain.layout.centerwork.horizontal,
+--    lain.layout.termfair,
+--    lain.layout.termfair.center,
 }
+local function set_tag(s)
+    -- awful.tag(awful.util.tagnames, s, awful.layout.layouts)
+    awful.tag.add( ":1", {
+            icon = "/usr/share/icons/Papirus/symbolic/apps/utilities-terminal-symbolic.svg",
+            icon_only = false,
+            gap = 5,
+            layout = awful.layout.layouts[1],
+            screen = s,
+            selected = true
+        })
+    awful.tag.add( ":2", {
+            icon = "/usr/share/icons/Papirus/symbolic/apps/google-chrome-symbolic.svg",
+            icon_only = false,
+            gap = 5,
+            layout = awful.layout.layouts[3],
+            screen = s
+        })
+    awful.tag.add( ":3", {
+            icon = "/usr/share/icons/Papirus/symbolic/apps/dino-symbolic.svg",
+            icon_only = false,
+            gap = 5,
+            layout = awful.layout.layouts[1],
+            screen = s
+        })
+    awful.tag.add( ":4", {
+            icon = "/usr/share/icons/Papirus/symbolic/apps/system-file-manager-symbolic.svg",
+            icon_only = false,
+            gap = 5,
+            layout = awful.layout.layouts[1],
+            screen = s
+        })
+    awful.tag.add( ":5", {
+            icon = "/usr/share/icons/Papirus/symbolic/apps/gnome-contacts-symbolic.svg",
+            icon_only = false,
+            gap = 5,
+            layout = awful.layout.layouts[1],
+            screen = s
+        })
+    awful.tag.add( ":6", {
+            icon = "/usr/share/icons/Papirus/symbolic/categories/applications-games-symbolic.svg",
+            icon_only = false,
+            gap = 5,
+            layout = awful.layout.layouts[1],
+            screen = s
+        })
+end
 -- }}}
 
 -- {{{ Mouse bindings
@@ -266,6 +316,8 @@ awful.key({ modkey,         }, "F12", function () os.execute(screenlocker) end,
     {description = "lock screen",       group = "launcher"}),
 -- Prompt
 awful.key({ modkey            }, "r", function () os.execute(runview) end,
+    {description = "run prompt",        group = "launcher"}),
+awful.key({ modkey            }, "Tab", function () os.execute(tabview) end,
     {description = "run prompt",        group = "launcher"}),
 -- awful.key({ modkey         }, "r",
 --   function () awful.screen.focused().mypromptbox:run() end,
@@ -578,6 +630,11 @@ client.connect_signal("manage", function (c)
         awful.titlebar.hide(c, beautiful.titlebar_position)
     end
 
+    -- No Default Maximized
+    if c.maximized then
+        c.maximized = not c.maximized
+    end
+
     -- If the layout is not floating, every floating client that appears is centered
     if awful.layout.get(mouse.screen) ~= awful.layout.suit.floating then
         awful.placement.centered(c,{honor_workarea=true})
@@ -663,7 +720,7 @@ end
 
 -- Enable sloppy focus, so that focus follows mouse.
 client.connect_signal("mouse::enter", function(c)
-    --c:emit_signal("request::activate", "mouse_enter", {raise = false})
+    c:emit_signal("request::activate", "mouse_enter", {raise = false})
 end)
 
 -- No border for maximized clients
@@ -704,7 +761,7 @@ awful.screen.connect_for_each_screen(function(s)
     s.quake = lain.util.quake({ app = awful.util.terminal })
     set_wallpaper(s)
     -- Tags
-    awful.tag(awful.util.tagnames, s, awful.layout.layouts)
+    set_tag(s)
     if beautiful.at_screen_connect then
         beautiful.at_screen_connect(s)
     end
@@ -716,17 +773,22 @@ end)
 awful.rules.rules = {
     -- All clients will match this rule.
     { rule = { },
-        properties = { border_width = beautiful.border_width,
+        properties = {
+            border_width = beautiful.border_width,
             border_color = beautiful.border_normal,
+            titlebars_enabled = beautiful.titlebars_enabled,
             focus = awful.client.focus.filter,
             raise = true,
             keys = clientkeys,
             buttons = clientbuttons,
             screen = awful.screen.preferred,
-            placement = awful.placement.no_overlap+awful.placement.no_offscreen,
-            size_hints_honor = false
+            placement = awful.placement.no_overlap + awful.placement.no_offscreen,
+            size_hints_honor = false,
         }
     },
+
+    { rule = { class = "konsole" },
+    properties = { maximized_vertical = false, maximized_horizontal = false, border_width = 85, border_color = 25 } },
 
     -- Floating clients
     { rule_any = {
@@ -735,7 +797,6 @@ awful.rules.rules = {
             },
             class = {
             },
-
             name = {
                 "Event Tester",  -- xev
             },
@@ -744,9 +805,12 @@ awful.rules.rules = {
             }
     }, properties = { floating = true, ontop = false }},
 
-    -- Set Firefox to always map on the first tag on screen 1.
-    --{ rule = { class = "Firefox" },
-    --  properties = { tag = awful.util.tagnames[2] } },
+    -- { rule = { class = "Firefox", },
+    -- properties = { tag = ":2" } },
+    -- { rule = { class = "Google-chrome", },
+    -- properties = { tag = ":2" } },
+    -- { rule = { class = "Chromium-browser", },
+    -- properties = { tag = ":2" } },
 
     -- Titlebars
     { rule_any = { type = { "dialog", "normal" } },
@@ -780,8 +844,8 @@ awful.rules.rules = {
           "Gimp",
           "Sublime_text",
           "Google-chrome",
-          --"discord",
-          --"TelegramDesktop",
+          "discord",
+          "TelegramDesktop",
           "Firefox",
           "Chromium-browser",
           "Rofi",

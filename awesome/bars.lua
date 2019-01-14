@@ -12,7 +12,7 @@ local keys    = require("keys")
 local desktop_mode_widget = require("noodle.desktop_mode_widget")
 local volumebar_widget    = require("noodle.volumebar_widget")
 local minimal_tasklist    = require("noodle.minimal_tasklist")
-local weather             = require("noodle.weather_widget")
+-- local weather             = require("noodle.weather_widget")
 
 -- Volume widget prefix
 volumebar_prefix             = wibox.widget.textbox(" ")
@@ -35,7 +35,7 @@ mydate                       = wibox.widget.textclock("%y/%m/%d")
 clock_prefix                 = wibox.widget.textbox(" ")
 clock_prefix.markup          = helpers.colorize_text(clock_prefix.text, beautiful.prefix_fg)
 mytextclock                  = wibox.widget.textclock("%H:%M")
-   
+
 -- Create item separator
 textseparator                = wibox.widget.textbox()
 textseparator.text           = beautiful.separator_text
@@ -63,7 +63,7 @@ local taglist_buttons = gears.table.join(
                 )
 
 local tasklist_buttons = gears.table.join(
-                     awful.button({ }, 1, 
+                     awful.button({ }, 1,
                         function (c)
                             if c == client.focus then
                                 c.minimized = true
@@ -105,7 +105,7 @@ awful.screen.connect_for_each_screen(function(s)
                awful.button({ }, 5, function () awful.layout.inc(-1) end)))
     s.layoutbox = wibox.container.margin(s.mylayoutbox, 0, 0, 9, 9);
     -- Create a taglist widget
-    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
+    s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.noempty, taglist_buttons)
     s.mytaglist.font = beautiful.font
 
     -- Create a tasklist widget
@@ -116,13 +116,13 @@ awful.screen.connect_for_each_screen(function(s)
     --s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.focused, tasklist_buttons)
     -- Show only minimized clients
     --s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.minimizedcurrenttags, tasklist_buttons)
-    
+
     -- Outer gaps
     --awful.screen.padding(awful.screen.focused(),{left = 28, right = 28, top = 28, bottom = 28})
 
     -- Create a system tray widget
     s.systray = wibox.widget.systray()
-    s.systray.visible = false -- can be toggled by a keybind
+    s.systray.visible = true -- can be toggled by a keybind
     s.systray.opacity = 0.8
     s.mysystray = wibox.container.margin( s.systray, 0, 0, 9, 9 )
 
@@ -143,16 +143,16 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             --mylauncher,
             pad,
-            s.mytaglist,
+            wibox.container.margin(s.mytaglist, 0, 0, 12 ,12),
             textseparator,
             minimal_tasklist,
             textseparator,
+            s.mypromptbox,
         },
         { -- Middle widgets
             --layout = wibox.layout.fixed.horizontal,
             layout = wibox.container.margin( mytasklist, 0, 0, 11, 11 ),
             s.mytasklist,
-            --s.mypromptbox,
             --textseparator,
             --minimal_tasklist
         },
@@ -161,12 +161,12 @@ awful.screen.connect_for_each_screen(function(s)
             --mpdarc_widget,
             --textseparator,
             --s.systray,
-            --s.mysystray,
+            s.mysystray,
             textseparator,
             volumebar_prefix,
             volumebar_widget,
             textseparator,
-            wibox.container.place(weather),
+            --wibox.container.place(weather),
             --textseparator,
             --memory_prefix,
             --mem_widget,
@@ -192,7 +192,7 @@ awful.screen.connect_for_each_screen(function(s)
             pad
         },
     }
-    
+
     -- Second (alternate panel)
     if beautiful.wibar_alt_enabled then
         if beautiful.wibar_alt_detached then

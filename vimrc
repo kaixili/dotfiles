@@ -196,11 +196,16 @@ let g:ale_linters = {
             \   'LUA': ['luac'],
             \}
 let g:ale_fix_on_save = 1
-" let g:ale_lint_on_text_changed = 'never'
+let g:ale_lint_on_text_changed = 'never'
 let g:ale_sign_column_always = 1
-let g:ale_echo_msg_error_str = 'E'
-let g:ale_echo_msg_warning_str = 'W'
+let g:ale_echo_msg_error_str = 'Error'
+let g:ale_echo_msg_warning_str = 'Warn'
 let g:ale_echo_msg_format = '[%linter%] %s [%severity%]'
+
+let g:ale_cpp_clang_options = '-std=c++17 -Wall'
+let g:ale_cpp_clangformat_options = '-std=c++17 -Wall'
+let g:ale_c_clang_options = '-std=c++17 -Wall'
+let g:ale_c_clangformat_options = '-std=c++17 -Wall'
 " }}}
 " Ycm {{{
 let g:ycm_global_ycm_extra_conf        = '~/.vim/plugged/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
