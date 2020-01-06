@@ -7,7 +7,6 @@
 [user]
     email       = lkx810@gmail.com
     name        = kaixili
-    signingkey  = 63F06F1058B2D751
 [push]
     default     = simple
 [github]
@@ -18,7 +17,5 @@
     tool        = vimdiff
 [diff]
     tool        = vimdiff
-[commit]
-	gpgsign     = true
 [core]
 	editor      = vim
