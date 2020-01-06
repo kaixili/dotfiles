@@ -18,6 +18,7 @@
     tool        = vimdiff
 [diff]
     tool        = vimdiff
-
 [commit]
-	gpgsign = true
+	gpgsign     = true
+[core]
+	editor      = vim
