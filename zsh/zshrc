@@ -10,7 +10,7 @@
 export DOTFILES=$HOME/.dotfiles
 
 # Auto Download Plug Manager
-[ -f $DOTFILES/zsh/antigen.zsh  ] || curl -L git.io/antigen > $DOTFILES/zsh/antigen.zsh 
+[ -f $DOTFILES/zsh/antigen.zsh  ] || curl -L git.io/antigen > $DOTFILES/zsh/antigen.zsh
 # Start Plug Manager
 source $DOTFILES/zsh/antigen.zsh
 # Plugin {{{
@@ -22,8 +22,8 @@ antigen bundles <<EOBUNDLES
   git                  # extras: git-extras gitfast git-flow git-flow-avh git-hubflow git-remote-branch
   gitignore            # gi alias to fetch default .gitignore files from http://gitignore.io/
   github               # cli access, url shortener
-  command-not-found    
-  web-search           
+  command-not-found
+  web-search
   extract              # 'x' alias - swiss knife for archive extracting
   cp                   # cp with progress bar (rsync)
   fzf                  # fuzzy search command using Ctrl-R
@@ -37,7 +37,7 @@ antigen bundles <<EOBUNDLES
   zsh-users/zsh-syntax-highlighting
   zsh-users/zsh-history-substring-search
 
-#  mafredri/zsh-async 
+#  mafredri/zsh-async
 #  unixorn/warhol.plugin.zsh               # Colorize command output using grc and lscolors
 #  sindresorhus/pure    # pretty, minimal and fast ZSH prompt
 EOBUNDLES
@@ -59,6 +59,8 @@ bindkey '^f' forward-word
 
 source $DOTFILES/zsh/history.zsh
 source $DOTFILES/zsh/user.setting.zsh
-[ -f $DOTFILES/zsh/zsh.local ] && source $DOTFILES/zsh/zsh.local
+
+[ ! -f $HOME/.zsh.local ] && echo touch $HOME/.zsh.local
+source $HOME/.zsh.local
 
 # vim:foldmethod=marker:foldlevel=0

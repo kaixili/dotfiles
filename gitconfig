@@ -6,7 +6,7 @@
     interactive = auto
 [user]
     email       = lkx810@gmail.com
-    name        = kaixili
+	name = 李开希
 [push]
     default     = simple
 [github]
@@ -19,3 +19,8 @@
     tool        = vimdiff
 [core]
 	editor      = vim
+[filter "lfs"]
+	required = true
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
