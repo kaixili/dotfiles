@@ -60,7 +60,7 @@ bindkey '^f' forward-word
 source $DOTFILES/zsh/history.zsh
 source $DOTFILES/zsh/user.setting.zsh
 
-[ ! -f $HOME/.zsh.local ] && echo touch $HOME/.zsh.local
+[ ! -f $HOME/.zsh.local ] && echo touch $HOME/.zsh.local && touch $HOME/.zsh.local
 source $HOME/.zsh.local
 
 # vim:foldmethod=marker:foldlevel=0
